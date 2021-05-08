@@ -6,29 +6,30 @@ if ($_POST) {
     $email = $_POST['email'];
     $pass = $_POST['pass'];
     $pass_confirm = $_POST['pass_confirm'];
+    $mentor = $_POST['mentor'];
+    $isMentor = 0;
+    if($mentor)
+    {
+        $isMentor = 1;
+    }
 
     $error = [];
 
-    if (!preg_match("#^[aA-zZ0-9\-_]+$#", $login))
-    {
+    if (!preg_match("#^[aA-zZ0-9\-_]+$#", $login)) {
         $error[] = "Неверный формат логина!";
     }
-    if (!preg_match("#^[aA-zZ0-9\-_]+$#", $pass))
-    {
+    if (!preg_match("#^[aA-zZ0-9\-_]+$#", $pass)) {
         $error[] = "Неверный формат пароля!";
     }
-    if($pass !== $pass_confirm)
-    {
+    if ($pass !== $pass_confirm) {
         $error[] = "Пароли не совпадают!";
     }
 
-    if(count($error) < 1)
-    {
+    if (count($error) < 1) {
         $pass = md5(md5($pass));
         $hash = md5($login + time());
 
-        if(!$querry = mysqli_query($db, "INSERT INTO users(user_login, user_email, user_password, user_hash, user_type, user_rating, user_full_name) VALUES ('$login', '$email', '$pass', '$hash', 0, 0, '$full_name'); "))
-        {
+        if (!$querry = mysqli_query($db, "INSERT INTO users(user_login, user_email, user_password, user_hash, user_type, user_rating, user_full_name) VALUES ('$login', '$email', '$pass', '$hash', '$isMentor', 0, '$full_name'); ")) {
             $error[] = "Ошибка базы данных!";
         }
 
@@ -45,10 +46,9 @@ if ($_POST) {
 </div>
 <?php
 
-    if(count($error) > 0)
-    {
-        echo $error[0];
-    }
+if (count($error) > 0) {
+    echo $error[0];
+}
 
 ?>
 <div class="row justify-content-center">
@@ -72,6 +72,10 @@ if ($_POST) {
         <div class="form-group" class="form-row">
             <label for="inptPassConf">Подтверждение пароля</label>
             <input type="password" name="pass_confirm" class="form-control" id="inptPassConf" placeholder="Повторите пароль" required>
+        </div>
+        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+            <input type="checkbox" name="mentor" class="custom-control-input" id="inptMantor">
+            <label class="custom-control-label" for="inptMantor">Зарегистрироваться как ментор</label>
         </div>
         <div class="form-group" class="form-row justify-content-center">
             <button type="submit" class="btn btn-success col-auto">Зарегистрироваться</button>

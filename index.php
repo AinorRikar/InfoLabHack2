@@ -1,12 +1,16 @@
-<?php
-
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <?php
+
+session_start();
+$login = " ";
+if (isset($_SESSION['user'])) {
+    $user_hash = $_SESSION['user']['hash'];
+    $querry = mysqli_query($db, "SELECT * FROM users WHERE user_hash = '$user_hash';");
+    $user = mysqli_fetch_assoc($querry);
+    $login = $user['user_login'];
+}
 
 include_once "modules/bd.php";
 
@@ -26,7 +30,6 @@ include_once "modules/bd.php";
     <div class="container-fluid m-0 p-0">
 
         <?php include "modules/navbar-top.php"; ?>
-
 
         <?php include "modules/page.php"; ?>
 

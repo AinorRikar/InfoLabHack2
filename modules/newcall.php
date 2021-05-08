@@ -1,8 +1,12 @@
 <?php
-$user_hash = $_SESSION['user']['hash'];
-$querry = mysqli_query($db, "SELECT * FROM users WHERE user_hash = '$user_hash';");
-$user = mysqli_fetch_assoc($querry);
-$login = $user['user_login'];
+
+$login = " ";
+if (isset($_SESSION['user'])) {
+    $user_hash = $_SESSION['user']['hash'];
+    $querry = mysqli_query($db, "SELECT * FROM users WHERE user_hash = '$user_hash';");
+    $user = mysqli_fetch_assoc($querry);
+    $login = $user['user_login'];
+}
 
 if(isset($_POST['title']))
 {
@@ -11,7 +15,6 @@ if(isset($_POST['title']))
     $full = $_POST['full'];
 
     $querry = mysqli_query($db, "INSERT INTO calls(call_title, call_short, call_full, call_author) VALUES('$title', '$short', '$full', '$login');");
-    if(!$querry) die("ПИЗДА");
     header("Location: /");
 }
 

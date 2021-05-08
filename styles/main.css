@@ -35,6 +35,12 @@
     padding: 10px;
 }
 
+.title-small-x {
+    font-size: large;
+    font-weight: bold;
+    padding: 5px;
+}
+
 .call {
     background-color: white;
     border-radius: 10px;
@@ -60,4 +66,24 @@
 .call-create {
     margin-top: 0px;
     margin-right: 10px;
+}
+
+.author {
+    color: brown;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.author-comm {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.comm-text {
+    min-height: 10px;
+}
+
+.comm {
+    border-left: 2px solid #cc0033;
 }
