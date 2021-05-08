@@ -1,55 +1,81 @@
 <?php
 
-if (isset($_POST['submit'])) {
-    $err = [];
+if ($_POST) {
+    $full_name = $_POST['full_name'];
+    $login = $_POST['login'];
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+    $pass_confirm = $_POST['pass_confirm'];
 
-    // проверям логин
-    if (!preg_match("/^[a-zA-Z0-9]+$/", $_POST['login'])) {
-        $err[] = "Логин может состоять только из букв латинского алфавита и цифр";
+    $error = [];
+
+    if (!preg_match("#^[aA-zZ0-9\-_]+$#", $login))
+    {
+        $error[] = "Неверный формат логина!";
+    }
+    if (!preg_match("#^[aA-zZ0-9\-_]+$#", $pass))
+    {
+        $error[] = "Неверный формат пароля!";
+    }
+    if($pass !== $pass_confirm)
+    {
+        $error[] = "Пароли не совпадают!";
     }
 
-    if (strlen($_POST['login']) < 3 or strlen($_POST['login']) > 30) {
-        $err[] = "Логин должен быть не меньше 3-х символов и не больше 30";
-    }
+    if(count($error) < 1)
+    {
+        $pass = md5(md5($pass));
+        $hash = md5($login + time());
 
-    // проверяем пароль
-    if (!preg_match("/^[a-zA-Z0-9]+$/", $_POST['password'])) {
-        $err[] = "Пароль может состоять только из букв латинского алфавита и цифр";
-    }
-
-    if (strlen($_POST['password']) < 6 or strlen($_POST['password']) > 30) {
-        $err[] = "Пароль должен быть не меньше 6-х символов и не больше 30";
-    }
-
-    // проверяем, не сущестует ли пользователя с таким именем
-    $query = mysqli_query($link, "SELECT user_id FROM users WHERE user_login='" . mysqli_real_escape_string($link, $_POST['login']) . "'");
-    if (mysqli_num_rows($query) > 0) {
-        $err[] = "Пользователь с таким логином уже существует в базе данных";
-    }
-
-    // Если нет ошибок, то добавляем в БД нового пользователя
-    if (count($err) == 0) {
-
-        $login = $_POST['login'];
-
-        // Убераем лишние пробелы и делаем двойное хеширование
-        $password = md5(md5(trim($_POST['password'])));
-
-        mysqli_query($link, "INSERT INTO users SET user_login='" . $login . "', user_password='" . $password . "'");
-        header("Location: ?login");
-        exit();
-    } else {
-        print "<b>При регистрации произошли следующие ошибки:</b><br>";
-        foreach ($err as $error) {
-            print $error . "<br>";
+        if(!$querry = mysqli_query($db, "INSERT INTO users(user_login, user_email, user_password, user_hash, user_type, user_rating, user_full_name) VALUES ('$login', '$email', '$pass', '$hash', 0, 0, '$full_name'); "))
+        {
+            $error[] = "Ошибка базы данных!";
         }
+
+        if (count($error) < 1) header("Location: /");
     }
 }
 
 ?>
 
-<form method="POST">
-    Логин <input name="login" type="text" required><br>
-    Пароль <input name="password" type="password" required><br>
-    <input name="submit" type="submit" value="Зарегистрироваться">
-</form>
+<div class="row justify-content-center">
+    <div class="col-10 justify-content-center">
+        <p class="title">РЕГИСТРАЦИЯ</p>
+    </div>
+</div>
+<?php
+
+    if(count($error) > 0)
+    {
+        echo $error[0];
+    }
+
+?>
+<div class="row justify-content-center">
+    <form action="" method="post" class="col-10">
+        <div class="form-group" class="form-row">
+            <label for="inptLogin">ФИО</label>
+            <input type="text" name="full_name" class="form-control" id="inptLogin" placeholder="Введите ФИО" required>
+        </div>
+        <div class="form-group" class="form-row">
+            <label for="inptLogin">Логин</label>
+            <input type="text" name="login" class="form-control" id="inptLogin" placeholder="Введите логин" required>
+        </div>
+        <div class="form-group" class="form-row">
+            <label for="emailLogin">Почта</label>
+            <input type="email" name="email" class="form-control" id="emailLogin" placeholder="Введите email" required>
+        </div>
+        <div class="form-group" class="form-row">
+            <label for="inptPass">Пароль</label>
+            <input type="password" name="pass" class="form-control" id="inptPass" placeholder="Введите пароль" required>
+        </div>
+        <div class="form-group" class="form-row">
+            <label for="inptPassConf">Подтверждение пароля</label>
+            <input type="password" name="pass_confirm" class="form-control" id="inptPassConf" placeholder="Повторите пароль" required>
+        </div>
+        <div class="form-group" class="form-row justify-content-center">
+            <button type="submit" class="btn btn-success col-auto">Зарегистрироваться</button>
+            <a href="?lk" class="btn btn-secondary col-auto">Войти</a>
+        </div>
+    </form>
+</div>

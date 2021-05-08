@@ -1,5 +1,5 @@
 <?php
 
-$link = mysqli_connect("localhost", "root", "password1234", "infolab");
+$db = mysqli_connect("localhost", "root", "password1234", "infolab");
 
 ?>

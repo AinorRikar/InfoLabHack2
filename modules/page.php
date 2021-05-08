@@ -1,11 +1,15 @@
-<div class="row no-gutters justify-content-center">
+<div class="row justify-content-center m-0">
     <div class="col-12 col-md-10 page">
         <?php
 
-        $query = mysqli_query($link, "SELECT user_id FROM users;");
-        echo $name;
-        
+        if (isset($_GET['lk'])) {
+            include "profile.php";
+        }
+        else
+        {
+            include "callboard.php";
+        }
+
         ?>
-        <?php include "modules/auth.php"; ?>
     </div>
 </div>
