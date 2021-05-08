@@ -32,7 +32,7 @@ if ($_POST) {
             $error[] = "Ошибка базы данных!";
         }
 
-        if (count($error) < 1) header("Location: /");
+        if (count($error) < 1) header("Location: /?lk");
     }
 }
 

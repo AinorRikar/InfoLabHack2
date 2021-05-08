@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" data-placement="bottom" data-html="true" data-toggle="tooltip" title="Главная страница">
-                <a class="nav-link btn bold" type="button" href="/">Главная</a>
+                <a class="nav-link btn bold" type="button" href="/">Объявления</a>
             </li>
             <li class="nav-item" data-placement="bottom" data-html="true" data-toggle="tooltip" title="Личный кабинет</br>пользователя">
                 <a class="nav-link btn bold" type="button" href="?lk">Личный кабинет</a>
