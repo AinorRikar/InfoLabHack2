@@ -9,6 +9,15 @@
             <li class="nav-item" data-placement="bottom" data-html="true" data-toggle="tooltip" title="Главная страница">
                 <a class="nav-link btn bold" type="button" href="/">Объявления</a>
             </li>
+            <?php
+            if(isset($_SESSION['user'])):
+            ?>
+            <li class="nav-item" data-placement="bottom" data-html="true" data-toggle="tooltip" title="Чаты">
+                <a class="nav-link btn bold" type="button" href="?chat">Чаты</a>
+            </li>
+            <?php
+            endif;
+            ?>
             <li class="nav-item" data-placement="bottom" data-html="true" data-toggle="tooltip" title="Личный кабинет</br>пользователя">
                 <a class="nav-link btn bold" type="button" href="?lk">Личный кабинет</a>
             </li>

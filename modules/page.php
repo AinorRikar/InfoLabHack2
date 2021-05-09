@@ -13,6 +13,10 @@
         {
             include "call.php";
         }
+        else if (isset($_GET['chat']))
+        {
+            include "chats.php";
+        }
         else
         {
             include "callboard.php";

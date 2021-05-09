@@ -1,5 +1,5 @@
 .background {
-    background-color: #c9c9c9;
+    background-color: brown;
 }
 
 .wt {
@@ -12,7 +12,7 @@
 
 .page {
     background-color: white;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 10px brown;
     min-height: 90vh;
     border-radius: 0px 0px 20px 20px;
     padding: 20px;
@@ -86,4 +86,70 @@
 
 .comm {
     border-left: 2px solid #cc0033;
+}
+
+.fa {
+    font-size: 25px;
+}
+
+.checked {
+    color: orange;
+}
+
+#wrapper, #loginform {
+    margin: 0 auto;
+    padding-bottom: 25px;
+    background: lightgray;
+    width: 504px;
+    border: 1px solid black;
+}
+
+#loginform {
+    padding-top: 18px;
+}
+
+#loginform p {
+    margin: 5px;
+}
+
+#chatbox {
+    text-align: left;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    padding: 10px;
+    background: #fff;
+    height: 270px;
+    width: 430px;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+#usermsg {
+    width: 395px;
+    margin-left: 25px;
+    border: 1px solid black;
+}
+
+#submit {
+    width: 60px;
+}
+
+.error {
+    color: #ff0000;
+}
+
+#menu {
+    padding: 12.5px 25px 12.5px 25px;
+}
+
+.welcome {
+    float: left;
+}
+
+.logout {
+    float: right;
+}
+
+.msgln {
+    margin: 0 0 2px 0;
 }
