@@ -92,27 +92,33 @@ endif;
 ?>
 </br>
 <?php
-if ($isInCall == true) :
+if (isset($_SESSION['user'])) :
 ?>
-    <div class="row justify-content-center">
-        <form action="" method="post" class="col-auto">
-            <input type="hidden" name="leave" value="true">
-            <div class="form-group" class="form-row justify-content-center">
-                <button type="submit" class="btn btn-danger col-auto">Покинуть объявление</button>
-            </div>
-        </form>
-    </div>
-<?php
-else :
-?>
-    <div class="row justify-content-center">
-        <form action="" method="post" class="col-auto">
-            <input type="hidden" name="enter" value="true">
-            <div class="form-group" class="form-row justify-content-center">
-                <button type="submit" class="btn btn-success col-auto">Присоединиться к объявлению</button>
-            </div>
-        </form>
-    </div>
+    <?php
+    if ($isInCall == true) :
+    ?>
+        <div class="row justify-content-center">
+            <form action="" method="post" class="col-auto">
+                <input type="hidden" name="leave" value="true">
+                <div class="form-group" class="form-row justify-content-center">
+                    <button type="submit" class="btn btn-danger col-auto">Покинуть объявление</button>
+                </div>
+            </form>
+        </div>
+    <?php
+    else :
+    ?>
+        <div class="row justify-content-center">
+            <form action="" method="post" class="col-auto">
+                <input type="hidden" name="enter" value="true">
+                <div class="form-group" class="form-row justify-content-center">
+                    <button type="submit" class="btn btn-success col-auto">Присоединиться к объявлению</button>
+                </div>
+            </form>
+        </div>
+    <?php
+    endif;
+    ?>
 <?php
 endif;
 ?>

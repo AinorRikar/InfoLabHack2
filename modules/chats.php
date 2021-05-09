@@ -10,9 +10,9 @@
 
                     <div id="chatbox">
                         <?php
-                        if (file_exists("log.html") && filesize("log.html") > 0) {
-                            $handle = fopen("log.html", "r");
-                            $contents = fread($handle, filesize("log.html"));
+                        if (file_exists("log" . $_GET['chat'] . ".html") && filesize("log" . $_GET['chat'] . ".html") > 0) {
+                            $handle = fopen("log". $_GET['chat'] .".html", "r");
+                            $contents = fread($handle, filesize("log" . $_GET['chat'] . ".html"));
                             fclose($handle);
 
                             echo $contents;
@@ -22,19 +22,22 @@
 
                     <form name="message" action="">
                         <input name="usermsg" type="text" id="usermsg" size="63" value="" />
+                        <input name="chat" type="hidden" id="chath" size="63" value="<?= $_GET['chat'] ?>" />
                         <input name="submitmsg" type="submit" id="submitmsg" value="Send" />
                     </form>
                 </div>
+                </br>
                 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
                 <script type="text/javascript">
                     // jQuery Document
                     $(document).ready(function() {
                         $("#submitmsg").click(function() {
-                            console.log("писька");
+                            var chat_id = $("#chath").val();
                             var clientmsg = $("#usermsg").val();
                             $("#usermsg").val("");
                             $.post("post.php", {
-                                text: clientmsg
+                                text: clientmsg,
+                                chat: chat_id
                             });
                             return false;
                         });
@@ -42,10 +45,12 @@
                     });
 
                     function loadLog() {
-                        console.log("писькаq");
                         var oldscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height before the request
+                        var chat_id = $("#chath").val();
+                        var u = "log" + chat_id + ".html";
+                        console.log(u);
                         $.ajax({
-                            url: "log.html",
+                            url: "log" + chat_id + ".html",
                             cache: false,
                             success: function(html) {
                                 $("#chatbox").html(html); //Insert chat log into the #chatbox div	
@@ -64,7 +69,24 @@
             </div>
             <div class="col-12 col-md-3">
                 <div class="list-group">
-                    <li class="list-group-item list-group-item-action list-group-item-dark title-small-x">ЧАТЫ</li>
+                    <a href="?chat" class="list-group-item list-group-item-action list-group-item-dark title-small-x">ЧАТЫ</a>
+                    <?php
+                    $hash = $_SESSION['user']['hash'];
+                    $d = mysqli_query($db, "SELECT * FROM users WHERE user_hash = '$hash';");
+                    $res = mysqli_fetch_assoc($d);
+                    $user_id = $res['user_id'];
+                    $q = mysqli_query($db, "SELECT * FROM uic WHERE uic_user = '$user_id';");
+
+                    while ($row = mysqli_fetch_assoc($q)) :
+                        $call_id = $row['uic_call'];
+                        $r = mysqli_query($db, "SELECT * FROM calls WHERE call_id = '$call_id';");
+                        $call = mysqli_fetch_assoc($r);
+                    ?>
+                        <a href="?chat=<?=$call_id?>" class="list-group-item list-group-item-action title-small-x"><?=$call['call_title']?></a>
+
+                    <?php
+                    endwhile;
+                    ?>
                 </div>
             </div>
         </div>
